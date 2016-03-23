@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:background="@color/grey">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="25dp"
+        android:textColor="@color/white"
+        android:text="@string/headline"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:id="@+id/last_thing"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/red"
+        android:id="@+id/delete_button"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textAllCaps="false"
+        android:text="@string/heading_delete"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:id="@+id/delete_text"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/red"
+        android:id="@+id/add_button"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textAllCaps="false"
+        android:text="@string/heading_create"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="150dp"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:text="@string/what_thing"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:id="@+id/what_text"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_height="match_parent"
+            android:text="@string/where"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:id="@+id/where_text"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red"
+        android:id="@+id/list_all"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textAllCaps="false"
+        android:text="@string/list_all"
+        />
+
+
+</LinearLayout>

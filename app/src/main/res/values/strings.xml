@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tingle</string>
+    <string name="where">Where</string>
+    <string name="what_thing">What thing?</string>
+    <string name="heading_create">Add new thing</string>
+    <string name="headline">Last thing added:</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="warningText">Warning!</string>
+    <string name="show_answer_button">Button</string>
+    <string name="list_all">List of all things</string>
+    <string name="heading_delete">Item to delete</string>
+</resources>
