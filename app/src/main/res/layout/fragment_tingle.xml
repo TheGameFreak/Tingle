@@ -21,29 +21,6 @@
         android:id="@+id/last_thing"
         />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/red"
-        android:id="@+id/delete_button"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:textAllCaps="false"
-        android:text="@string/heading_delete"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/white"
-        android:id="@+id/delete_text"
-        android:singleLine="true"
-        android:imeOptions="actionDone"
-        />
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"

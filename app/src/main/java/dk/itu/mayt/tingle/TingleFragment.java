@@ -22,10 +22,10 @@ public class TingleFragment extends Fragment {
 
 
     // GUI variables
-    private Button addThing, listAllThings, deleteThing;
+    private Button addThing, listAllThings;
     private TextView lastAdded;
-    private TextView newWhat, newWhere, deleteText;
-    private ListView listView;
+    private TextView newWhat, newWhere;
+    //private ListView listView;
 
 
     private static ThingsDB thingsDB;
@@ -38,19 +38,15 @@ public class TingleFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tingle, container, false);
 
         thingsDB= ThingsDB.get(getActivity());
-        //commented out because it puts in things every time a rotation happens
-        //and the database is already filled when created
-        //fillThingsDB();
 
 
         addThing = (Button) v.findViewById(R.id.add_button);
         listAllThings = (Button) v.findViewById(R.id.list_all);
-        deleteThing = (Button) v.findViewById(R.id.delete_button);
 
         lastAdded= (TextView) v.findViewById(R.id.last_thing);
         updateUI();
 
-        listView = (ListView) v.findViewById(R.id.thing_list_view);
+        //listView = (ListView) v.findViewById(R.id.thing_list_view);
         newWhat= (TextView) v.findViewById(R.id.what_text);
         newWhere= (TextView) v.findViewById(R.id.where_text);
 
@@ -77,34 +73,15 @@ public class TingleFragment extends Fragment {
             }
         });
 
-        deleteText = (TextView) v.findViewById(R.id.delete_text);
-
-        //customize delete text's enter button
-        deleteText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                switch (actionId){
-                    case EditorInfo.IME_ACTION_DONE:
-                        String thingDelete = deleteText.getText().toString().toLowerCase();
-                        tryDelete(thingDelete);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-
-                // view products click event
-                addThing.setOnClickListener(new View.OnClickListener() {
+        // view products click event
+        addThing.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String whatAdd = newWhat.getText().toString();
-                        String whereAdd = newWhere.getText().toString();
-                        tryAdd(whatAdd, whereAdd);
+            String whatAdd = newWhat.getText().toString();
+            String whereAdd = newWhere.getText().toString();
+            tryAdd(whatAdd, whereAdd);
 
-                    }
-                });
+            }});
 
 
 
@@ -130,15 +107,6 @@ public class TingleFragment extends Fragment {
         });
 
 
-        deleteThing.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                String thingDelete = deleteText.getText().toString();
-                tryDelete(thingDelete);
-            }
-        });
-
-
         return v;
     }
 
@@ -149,7 +117,6 @@ public class TingleFragment extends Fragment {
             thingsDB.addThing(
                     new Thing(whatAdd,
                             whereAdd));
-            //listAdapter.notifyDataSetChanged();
             newWhat.setText("");
             newWhere.setText("");
 
@@ -163,16 +130,6 @@ public class TingleFragment extends Fragment {
         }
     }
 
-
-    private void tryDelete(String thingDelete)
-    {
-        if (thingDelete.length() >0){
-            thingsDB.deleteThing(thingDelete);
-            //listAdapter.notifyDataSetChanged();
-            deleteText.setText("");
-            updateUI();
-        }
-    }
 
 
     @Override
