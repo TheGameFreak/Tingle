@@ -19,9 +19,6 @@ import android.widget.TextView;
  */
 public class TingleFragmentList extends ListFragment {
 
-/*
-    * OBS!!!! updateUI needs to be called somehow, probably need to implement similar function, otherwise last added will be wrong!
-    * */
 
     private ThingArrayAdapter listAdapter;
 
@@ -56,18 +53,31 @@ public class TingleFragmentList extends ListFragment {
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
         adb.setTitle("Delete?");
 
-        final String thingToRemove = thingsDB.get(position).getWhat();
-        adb.setMessage("Do you want to delete this item?");
-        adb.setNegativeButton("Cancel",null);
+
+        final Thing thingToRemove = listAdapter.getItem(position);
+
+        adb.setMessage("Do you want to delete " + thingToRemove.getWhat() + "?");
+        adb.setNegativeButton("Cancel", null);
         adb.setPositiveButton("Delete", new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 thingsDB.deleteThing(thingToRemove);
+                listAdapter.clear();
+                listAdapter.addAll(thingsDB.getThingsDB()); //have to manually add all because notifyDataSetChanged does not work as before
+
+                TingleFragment fragment = (TingleFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+                if(fragment != null)
+                    fragment.itemDeleted();
+
                 listAdapter.notifyDataSetChanged();
             }
         });
         adb.show();
     }
 
+
+
+
+    //page 328
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -81,6 +91,12 @@ public class TingleFragmentList extends ListFragment {
     public void updateListView()
     {
         if(listAdapter != null)
+        {
+            listAdapter.clear();
+            listAdapter.addAll(thingsDB.getThingsDB());
+
             listAdapter.notifyDataSetChanged();
+        }
+
     }
 }

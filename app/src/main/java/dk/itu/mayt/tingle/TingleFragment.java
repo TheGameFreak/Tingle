@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class TingleFragment extends Fragment {
 
     // GUI variables
     private Button addThing, listAllThings;
+    private ImageButton barcodeCamera;
     private TextView lastAdded;
     private TextView newWhat, newWhere;
     //private ListView listView;
@@ -42,6 +44,8 @@ public class TingleFragment extends Fragment {
 
         addThing = (Button) v.findViewById(R.id.add_button);
         listAllThings = (Button) v.findViewById(R.id.list_all);
+
+        barcodeCamera = (ImageButton) v.findViewById(R.id.barcode_camera);
 
         lastAdded= (TextView) v.findViewById(R.id.last_thing);
         updateUI();
@@ -83,6 +87,18 @@ public class TingleFragment extends Fragment {
 
             }});
 
+        barcodeCamera.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                // #HERP!!!!!! TODO. also check how to implement
+                /*
+                * scan barcode and open up the info.
+                 * user gets to pick if it is the right item
+                 * No: give option to retake photo or cancel
+                 * Yes: take the name of the item and put it in the what field
+                */
+            }
+        });
 
 
 
@@ -95,13 +111,13 @@ public class TingleFragment extends Fragment {
                     //if not start new activity then what????
                     Intent i = new Intent(getActivity(), ListActivity.class);
                     startActivity(i);
-                    return;
+                    //return;
                 }
                 else
                 {
                     TingleFragmentList fragmentList = new TingleFragmentList();
                     getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container_list, fragmentList).addToBackStack(null).commit();
-                    return;
+                    //return;
                 }
             }
         });
@@ -144,13 +160,36 @@ public class TingleFragment extends Fragment {
         thingsDB.addThing(new Thing("Big Nerd book", "Desk"));
     }
     private void updateUI(){
-        int s= thingsDB.size();
+        //wrong! instead make sql query and sort desc on _id
+        /*int s= thingsDB.size();
 
         if (s>0) {
-            lastAdded.setText(thingsDB.get(s-1).toString());
-        }
+            Thing thing = thingsDB.get(s);
+            if(thing == null)
+                lastAdded.setText("No items added");
+            else
+                lastAdded.setText(thing.toString());
+        }*/
+        Thing thing = thingsDB.lastAdded();
+        if(thing == null)
+            lastAdded.setText("No items added");
+        else
+            lastAdded.setText(thing.toString());
+
+    }
+
+    public void itemDeleted()
+    {
+        updateUI();
     }
 
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        //TODO as we do not really have update function, maybe we do not need the following code
+        //thingsDB.get(getActivity().updateThing(mThing));
+    }
 
 }

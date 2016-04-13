@@ -51,11 +51,17 @@
 
         <TextView
             android:layout_height="match_parent"
-            android:layout_width="150dp"
+            android:layout_width="110dp"
             android:textSize="20dp"
             android:textColor="@color/white"
             android:text="@string/what_thing"
             />
+        <ImageButton
+            android:id="@+id/barcode_camera"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@color/grey"
+            android:src="@drawable/ic_bar_code"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -86,15 +92,10 @@
             />
     </LinearLayout>
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/red"
         android:id="@+id/list_all"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:textAllCaps="false"
-        android:text="@string/list_all"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
         />
-
 
 </LinearLayout>

@@ -1,6 +1,11 @@
 package dk.itu.mayt.tingle;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,41 +15,161 @@ import java.util.List;
  */
 public class ThingsDB {
     private static ThingsDB sThingsDB;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
     //fake database
-    private List<Thing> mThingsDB;
+    //private List<Thing> mThingsDB;
+
     public static ThingsDB get(Context context) {
         if (sThingsDB == null) {
             sThingsDB= new ThingsDB(context);
         }
         return sThingsDB;
     }
-    public List<Thing> getThingsDB() {return mThingsDB; }
-    public void addThing(Thing thing) { mThingsDB.add(thing); }
-    public int size() {return mThingsDB.size(); }
-    public Thing get(int i){ return mThingsDB.get(i); }
+    public List<Thing> getThingsDB()
+    {
+        List<Thing> things = new ArrayList<>();
+
+        ThingCursorWrapper cursor = queryThings(null, null);
+
+        try
+        {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast())
+            {
+                things.add(cursor.getThing());
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            cursor.close();
+        }
+        return things;
+    }
+    public void addThing(Thing thing)
+    {
+        ContentValues values = getContentValues(thing);
+        Integer Id = (int) mDatabase.insert(ThingsDbSchema.ThingTable.NAME, null, values);
+        thing.setId(Id);
+
+    }
+
+    //update will be used when updating click count..
+    public void updateThing (Thing thing)
+    {
+        String idString = thing.getId().toString();
+        ContentValues values = getContentValues(thing);
+
+        //using _id to find item and then update it
+        mDatabase.update(ThingsDbSchema.ThingTable.NAME, values,
+                "_id = ?",
+                new String[]{idString});
+    }
+
+
+    public int size()
+    {
+        return getThingsDB().size();
+        //return (int)DatabaseUtils.queryNumEntries(mDatabase, ThingsDbSchema.ThingTable.NAME);
+    }
+    //don't know if this will work...
+    //returns null if nothing found
+    public Thing get(Integer i)
+    {
+        ThingCursorWrapper cursor = queryThings("_id = ?",
+                new String[]{i.toString()});
+
+        Thing thing = null;//new Thing ("no item", "no item");
+
+        try
+        {
+            cursor.moveToFirst();
+            if(!cursor.isAfterLast())
+                thing = cursor.getThing();
+        }
+        finally {
+            cursor.close();
+        }
+        return thing;
+    }
+
+
     // Fill database for testing purposes
     private ThingsDB(Context context) {
-        mThingsDB= new ArrayList<Thing>();
-        mThingsDB.add(new Thing("Android Phone", "Desk"));
+        mContext = context.getApplicationContext();
+        mDatabase = new ThingsBaseHelper(mContext).getWritableDatabase();
+
+        //mThingsDB= new ArrayList<Thing>();
+        //addThing(new Thing("Android Phone", "Desk"));
         // add as many as you like
-        mThingsDB.add(new Thing("Big Nerd book", "Desk"));
+        //addThing(new Thing("Big Nerd book", "Desk"));
+        //addThing(new Thing("aa", "Desk"));
+        //addThing(new Thing("bb", "Desk"));
+        //addThing(new Thing("cc", "Desk"));
+        //addThing(new Thing("dd", "Desk"));
     }
 
     /*
      * This function assumes that the user wants to remove all registered instances of the item
      */
-    public   void  deleteThing(String thingWhat) {
-        List<Thing> toDelete = new ArrayList<Thing>();
-        for(Thing thing : mThingsDB)
-        {
-            //System.out.println(thing.getWhat() + " vs. " + thingWhat);
-            if(thing.getWhat().toLowerCase().equals(thingWhat.toLowerCase()))
-            {
-                toDelete.add(thing);
-                //break;
-            }
-        }
-        mThingsDB.removeAll(toDelete);
-    }
+    public void  deleteThing(Thing thing) {
+
+        mDatabase.delete(ThingsDbSchema.ThingTable.NAME, "_id = " + thing.getId() + "", null);
 
     }
+
+    private static ContentValues getContentValues(Thing thing)
+    {
+        //TODO consider putting click count in Thing object
+        ContentValues values = new ContentValues();
+        values.put(ThingsDbSchema.ThingTable.Cols.WHAT, thing.getWhat());
+        values.put(ThingsDbSchema.ThingTable.Cols.WHERE, thing.getWhere());
+        values.put(ThingsDbSchema.ThingTable.Cols.COUNT, 0);    //TODO Check if can get value somehow
+
+        return values;
+    }
+
+    private ThingCursorWrapper queryThings(String whereClause, String[] whereArgs)
+    {
+        Cursor cursor = mDatabase.query(
+                ThingsDbSchema.ThingTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+
+        return new ThingCursorWrapper(cursor);
+    }
+
+    public Thing lastAdded()
+    {
+        Cursor _cursor = mDatabase.query(
+                ThingsDbSchema.ThingTable.NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                "_id DESC"
+        );
+        Thing thing = null;//new Thing ("no item", "no item");
+        ThingCursorWrapper cursor = new ThingCursorWrapper(_cursor);
+
+        try
+        {
+            cursor.moveToFirst();
+            if(!cursor.isAfterLast())
+                thing = cursor.getThing();
+        }
+        finally {
+            cursor.close();
+        }
+        return thing;
+
+    }
+
+
+}

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class ThingArrayAdapter extends ArrayAdapter<Thing> {
     private final Context context;
-    private final List<Thing> values;
+    private List<Thing> values;
 
     public ThingArrayAdapter(Context context, List<Thing> values) {
         super(context, R.layout.list_item, values);
@@ -34,4 +35,10 @@ public class ThingArrayAdapter extends ArrayAdapter<Thing> {
         whereView.append(values.get(i).getWhere());
         return rowView;
     }
+
+    public void setValues (List<Thing> values)
+    {
+        this.values = values;
+    }
+
 }
