@@ -22,28 +22,6 @@ public class TingleActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tingle);
 
-        /*
-        int currentOrientation = getResources().getConfiguration().orientation;
-
-        if(currentOrientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-            TingleFragment fragment = new TingleFragment();
-            fragment.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
-        }
-        else
-        {
-            TingleFragment fragment = new TingleFragment();
-            fragment.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-
-            TingleFragmentList fragmentList = new TingleFragmentList();
-            fragmentList.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction().add(R.id.fragment_container_list, fragmentList).commit();
-        }
-
-        */
-
         //could not get getSupportFragmentManager to work, got incompatible error
         FragmentManager fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);

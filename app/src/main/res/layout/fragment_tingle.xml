@@ -23,21 +23,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/red"
-        android:id="@+id/add_button"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:textAllCaps="false"
-        android:text="@string/heading_create"
-        />
-
-    <View
-        android:layout_width="match_parent"
         android:layout_height="10dp"
         />
 
@@ -89,6 +74,23 @@
             android:singleLine="true"
             />
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red"
+        android:id="@+id/add_button"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textAllCaps="false"
+        android:text="@string/heading_create"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -23,7 +23,7 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity {
 
     private static ThingsDB thingsDB;
-    //ThingArrayAdapter listAdapter;
+    //make this searchable activity?  http://developer.android.com/guide/topics/search/search-dialog.html
 
     @Override
     protected void  onCreate(Bundle savedInstanceState)
@@ -72,4 +72,11 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed()
+    {
+        Thread.currentThread().interrupt();
+        super.onBackPressed();
+        this.finish();
+    }
 }
