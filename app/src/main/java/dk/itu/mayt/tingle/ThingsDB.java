@@ -66,14 +66,19 @@ public class ThingsDB {
                 new String[]{idString});
     }
 
+    public List<Thing> searchThing (String what)
+    {
+        return searchThing("what = ?", new String[]{what});
+    }
+
 
     public int size()
     {
         return getThingsDB().size();
         //return (int)DatabaseUtils.queryNumEntries(mDatabase, ThingsDbSchema.ThingTable.NAME);
     }
-    //don't know if this will work...
-    //returns null if nothing found
+
+
     public Thing get(Integer i)
     {
         ThingCursorWrapper cursor = queryThings("_id = ?",
@@ -99,14 +104,6 @@ public class ThingsDB {
         mContext = context.getApplicationContext();
         mDatabase = new ThingsBaseHelper(mContext).getWritableDatabase();
 
-        //mThingsDB= new ArrayList<Thing>();
-        //addThing(new Thing("Android Phone", "Desk"));
-        // add as many as you like
-        //addThing(new Thing("Big Nerd book", "Desk"));
-        //addThing(new Thing("aa", "Desk"));
-        //addThing(new Thing("bb", "Desk"));
-        //addThing(new Thing("cc", "Desk"));
-        //addThing(new Thing("dd", "Desk"));
     }
 
     /*
@@ -168,6 +165,34 @@ public class ThingsDB {
             cursor.close();
         }
         return thing;
+
+    }
+
+    public List<Thing> searchThing(String whereClause, String[] whereArgs)
+    {
+        List<Thing> result = new ArrayList<Thing>();
+
+        Cursor _cursor = mDatabase.query(
+                ThingsDbSchema.ThingTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                ThingsDbSchema.ThingTable.Cols.COUNT + " DESC"
+        );
+        ThingCursorWrapper cursor = new ThingCursorWrapper(_cursor);
+
+        try
+        {
+            cursor.moveToFirst();
+            if(!cursor.isAfterLast())
+                result.add(cursor.getThing());
+        }
+        finally {
+            cursor.close();
+        }
+        return result;
 
     }
 

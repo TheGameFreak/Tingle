@@ -9,4 +9,5 @@
     <string name="show_answer_button">Button</string>
     <string name="list_all">List of all things</string>
     <string name="heading_delete">Item to delete</string>
+    <string name="search_hint">Search thing</string>
 </resources>
