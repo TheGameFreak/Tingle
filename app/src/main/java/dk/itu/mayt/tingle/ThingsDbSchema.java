@@ -1,7 +1,7 @@
 package dk.itu.mayt.tingle;
 
 /**
- * Created by May Ji on 06-04-2016.
+ * Created by May Ji & Micki on 06-04-2016.
  */
 public class ThingsDbSchema {
     public static final class ThingTable {

@@ -17,7 +17,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by May Ji on 26-02-2016.
+ * Created by May Ji & Micki on 26-02-2016.
  */
 public class TingleFragment extends Fragment {
 
@@ -62,6 +61,7 @@ public class TingleFragment extends Fragment {
 
         newWhat= (TextView) v.findViewById(R.id.what_text);
         newWhere= (TextView) v.findViewById(R.id.where_text);
+        newWhere.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchWhat = (TextView) v.findViewById(R.id.search_text);
 
         newWhere.setOnEditorActionListener(new TextView.OnEditorActionListener() {

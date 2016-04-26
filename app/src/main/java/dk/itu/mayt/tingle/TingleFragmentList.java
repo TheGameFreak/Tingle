@@ -1,23 +1,17 @@
 package dk.itu.mayt.tingle;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import java.util.List;
 
 /**
- * Created by May Ji on 28-02-2016.
+ * Created by May Ji & Micki on 28-02-2016.
  */
 public class TingleFragmentList extends ListFragment {
 
@@ -30,10 +24,6 @@ public class TingleFragmentList extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        //super.onCreateView(inflater, container, savedInstanceState);
-
-        //View v = inflater.inflate(R.layout.list_fragment_tingle, container, false);
-        //listView = (ListView)v.findViewById(R.id.thing_list_view);
 
         thingsDB= ThingsDB.get(getActivity());
 
@@ -45,7 +35,6 @@ public class TingleFragmentList extends ListFragment {
 
         return super.onCreateView(inflater, container, savedInstanceState);
 
-        //return v;
     }
 
     @Override
@@ -78,9 +67,6 @@ public class TingleFragmentList extends ListFragment {
     }
 
 
-
-
-    //page 328
 
     @Override
     public void onCreate(Bundle savedInstanceState)

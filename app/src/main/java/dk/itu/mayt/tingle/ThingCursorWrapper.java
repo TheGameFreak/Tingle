@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 /**
- * Created by May Ji on 11-04-2016.
+ * Created by May Ji & Micki on 11-04-2016.
  */
 public class ThingCursorWrapper extends CursorWrapper {
 

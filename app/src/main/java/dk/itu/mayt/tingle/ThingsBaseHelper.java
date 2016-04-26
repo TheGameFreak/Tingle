@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by May Ji on 04-04-2016.
+ * Created by May Ji & Micki on 04-04-2016.
  */
 public class ThingsBaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "ThingsBaseHelper";

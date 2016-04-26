@@ -1,19 +1,9 @@
 package dk.itu.mayt.tingle;
 
-import android.app.Activity;
-//import android.support.v7.app.AppCompatActivity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TingleActivity extends FragmentActivity {
 

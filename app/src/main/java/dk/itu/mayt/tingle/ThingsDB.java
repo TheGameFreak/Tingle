@@ -2,16 +2,14 @@ package dk.itu.mayt.tingle;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by May Ji on 24-02-2016.
+ * Created by May Ji & Micki on 24-02-2016.
  */
 public class ThingsDB {
     private static ThingsDB sThingsDB;

@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by May Ji on 21-04-2016.
+ * Created by May Ji & Micki on 21-04-2016.
  */
 public class NetworkFetcher {
 
