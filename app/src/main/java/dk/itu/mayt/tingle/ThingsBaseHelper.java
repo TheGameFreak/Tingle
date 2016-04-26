@@ -18,7 +18,6 @@ public class ThingsBaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //count will be used for sorting algorithm. maybe change to location if implement location through gps
         db.execSQL("CREATE TABLE " + ThingsDbSchema.ThingTable.NAME
                 + " (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ThingsDbSchema.ThingTable.Cols.WHAT + " TEXT, "

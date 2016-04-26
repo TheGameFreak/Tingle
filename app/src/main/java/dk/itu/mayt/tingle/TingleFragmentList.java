@@ -57,7 +57,8 @@ public class TingleFragmentList extends ListFragment {
 
 
         final Thing thingToRemove = listAdapter.getItem(position);
-
+        thingToRemove.increaseCount();
+        thingsDB.updateThing(thingToRemove);
         adb.setMessage("Do you want to delete " + thingToRemove.getWhat() + "?");
         adb.setNegativeButton("Cancel", null);
         adb.setPositiveButton("Delete", new AlertDialog.OnClickListener() {

@@ -36,7 +36,8 @@ public class ThingArrayAdapter extends ArrayAdapter<Thing> {
         return rowView;
     }
 
-    public void setValues (List<Thing> values)
+    //does not seem to work the way it is intended
+    //public void setValues (List<Thing> values)
     {
         this.values = values;
     }

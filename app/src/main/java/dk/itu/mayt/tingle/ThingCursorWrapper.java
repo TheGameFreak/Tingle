@@ -25,7 +25,7 @@ public class ThingCursorWrapper extends CursorWrapper {
         thing.setWhat(whatString);
         thing.setWhere(whereString);
         thing.setId(id);
-        //thing.setCount(count);
+        thing.setCount(count);
 
         return thing;
     }

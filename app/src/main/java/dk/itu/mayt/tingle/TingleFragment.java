@@ -32,15 +32,11 @@ import java.util.List;
  */
 public class TingleFragment extends Fragment {
 
-
-    //Thread listAllThread;
-
     // GUI variables
     private Button addThing, listAllThings, searchThings;
     private ImageButton barcodeCamera;
     private TextView lastAdded;
     private TextView newWhat, newWhere, searchWhat;
-    //private ListView listView;
 
 
     private static ThingsDB thingsDB;
@@ -132,16 +128,11 @@ public class TingleFragment extends Fragment {
                         }
                     }).start();
 
-
-                    //Intent i = new Intent(getActivity(), ListActivity.class);
-                    //startActivity(i);
-
                 }
                 else
                 {
                     TingleFragmentList fragmentList = new TingleFragmentList();
                     getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container_list, fragmentList).addToBackStack(null).commit();
-                    //return;
                 }
             }
         });
@@ -175,7 +166,6 @@ public class TingleFragment extends Fragment {
             }
         });
 
-        //TODO!!! find out how to list all things again!
         searchThings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -203,16 +193,11 @@ public class TingleFragment extends Fragment {
         if (requestCode == 0) {
             if (resultCode == getActivity().RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
-                System.out.println("contents are: " + contents);
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                //String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
 // Handle successful scan, go on the internet, fetch data and present.
                 new FetchOutpanTask().execute(contents);
 
-
-                //Toast toast = Toast.makeText(getActivity(), "Content:" + contents + " Format:" + format , Toast.LENGTH_LONG);
-                //toast.setGravity(Gravity.TOP, 25, 400);
-                //toast.show();
             } else if (resultCode == getActivity().RESULT_CANCELED) {
 // Handle cancel
                 Toast toast = Toast.makeText(getActivity(), "Scan was Cancelled!", Toast.LENGTH_LONG);
@@ -221,11 +206,6 @@ public class TingleFragment extends Fragment {
             }
         }
     }
-
-
-
-
-
 
 
 
@@ -283,13 +263,8 @@ public class TingleFragment extends Fragment {
     public void onPause()
     {
         super.onPause();
-        //TODO as we do not really have update function, maybe we do not need the following code
-        //thingsDB.get(getActivity().updateThing(mThing));
+
     }
-
-
-    //TODO: searching should be separate thread
-
 
 
 
@@ -305,8 +280,7 @@ public class TingleFragment extends Fragment {
             try
             {
                 result = new NetworkFetcher()
-                        .getProductInfo("https://api.outpan.com/v2/products/"+item+"/?apikey="+API_KEY);//"https://www.outpan.com/view_product.php?barcode="+params);
-                        //https://api.outpan.com/v2/products/<barcode>/?apikey=API_KEY
+                        .getProductInfo("https://api.outpan.com/v2/products/"+item+"/?apikey="+API_KEY);
             }
 
             catch (IOException ioe)
@@ -322,7 +296,6 @@ public class TingleFragment extends Fragment {
                 JSONObject json = new JSONObject(foo);
                 String nameOfItem = json.getString("name");
 
-                //set the found name, later expand to prompt
                 newWhat.setText(nameOfItem);
 
             }

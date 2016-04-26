@@ -17,8 +17,7 @@ public class ThingsDB {
     private static ThingsDB sThingsDB;
     private Context mContext;
     private SQLiteDatabase mDatabase;
-    //fake database
-    //private List<Thing> mThingsDB;
+
 
     public static ThingsDB get(Context context) {
         if (sThingsDB == null) {
@@ -54,7 +53,6 @@ public class ThingsDB {
 
     }
 
-    //update will be used when updating click count..
     public void updateThing (Thing thing)
     {
         String idString = thing.getId().toString();
@@ -68,14 +66,13 @@ public class ThingsDB {
 
     public List<Thing> searchThing (String what)
     {
-        return searchThing("what = ?", new String[]{what});
+        return searchThing("what LIKE ?", new String[]{"%"+what+"%"});
     }
 
 
     public int size()
     {
         return getThingsDB().size();
-        //return (int)DatabaseUtils.queryNumEntries(mDatabase, ThingsDbSchema.ThingTable.NAME);
     }
 
 
@@ -84,7 +81,7 @@ public class ThingsDB {
         ThingCursorWrapper cursor = queryThings("_id = ?",
                 new String[]{i.toString()});
 
-        Thing thing = null;//new Thing ("no item", "no item");
+        Thing thing = null;
 
         try
         {
@@ -106,9 +103,7 @@ public class ThingsDB {
 
     }
 
-    /*
-     * This function assumes that the user wants to remove all registered instances of the item
-     */
+
     public void  deleteThing(Thing thing) {
 
         mDatabase.delete(ThingsDbSchema.ThingTable.NAME, "_id = " + thing.getId() + "", null);
@@ -117,11 +112,10 @@ public class ThingsDB {
 
     private static ContentValues getContentValues(Thing thing)
     {
-        //TODO consider putting click count in Thing object
         ContentValues values = new ContentValues();
         values.put(ThingsDbSchema.ThingTable.Cols.WHAT, thing.getWhat());
         values.put(ThingsDbSchema.ThingTable.Cols.WHERE, thing.getWhere());
-        values.put(ThingsDbSchema.ThingTable.Cols.COUNT, 0);    //TODO Check if can get value somehow
+        values.put(ThingsDbSchema.ThingTable.Cols.COUNT, thing.getCount());
 
         return values;
     }
@@ -152,7 +146,7 @@ public class ThingsDB {
                 null,
                 "_id DESC"
         );
-        Thing thing = null;//new Thing ("no item", "no item");
+        Thing thing = null;
         ThingCursorWrapper cursor = new ThingCursorWrapper(_cursor);
 
         try

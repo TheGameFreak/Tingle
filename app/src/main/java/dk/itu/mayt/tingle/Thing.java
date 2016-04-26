@@ -7,6 +7,8 @@ public class Thing {
     private String mWhat = null;
     private String mWhere = null;
     private Integer mSQLId = null;
+    private Integer mCount = 0;
+
     public Thing(String what, String where) {
         mWhat = what;
         mWhere = where;
@@ -24,4 +26,8 @@ public class Thing {
     //used for finding item in database using _id
     public void setId (Integer newId) { mSQLId = newId;}
     public Integer getId () {return mSQLId;}
+
+    public void increaseCount(){this.mCount++;}
+    public Integer getCount(){return this.mCount;}
+    public void setCount(Integer count){this.mCount = count;}
 }
