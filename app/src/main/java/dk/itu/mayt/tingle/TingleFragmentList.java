@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by May Ji on 28-02-2016.
  */
@@ -98,5 +100,16 @@ public class TingleFragmentList extends ListFragment {
             listAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    public void searchListView(List<Thing> things)
+    {
+        if(listAdapter != null)
+        {
+            listAdapter.clear();
+            listAdapter.addAll(things);
+
+            listAdapter.notifyDataSetChanged();
+        }
     }
 }

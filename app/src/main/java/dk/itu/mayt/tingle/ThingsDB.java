@@ -186,8 +186,11 @@ public class ThingsDB {
         try
         {
             cursor.moveToFirst();
-            if(!cursor.isAfterLast())
+            while (!cursor.isAfterLast())
+            {
                 result.add(cursor.getThing());
+                cursor.moveToNext();
+            }
         }
         finally {
             cursor.close();

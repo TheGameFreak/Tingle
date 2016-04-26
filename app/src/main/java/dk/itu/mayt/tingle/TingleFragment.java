@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by May Ji on 26-02-2016.
@@ -35,10 +36,10 @@ public class TingleFragment extends Fragment {
     //Thread listAllThread;
 
     // GUI variables
-    private Button addThing, listAllThings;
+    private Button addThing, listAllThings, searchThings;
     private ImageButton barcodeCamera;
     private TextView lastAdded;
-    private TextView newWhat, newWhere;
+    private TextView newWhat, newWhere, searchWhat;
     //private ListView listView;
 
 
@@ -56,15 +57,16 @@ public class TingleFragment extends Fragment {
 
         addThing = (Button) v.findViewById(R.id.add_button);
         listAllThings = (Button) v.findViewById(R.id.list_all);
+        searchThings = (Button) v.findViewById(R.id.search);
 
         barcodeCamera = (ImageButton) v.findViewById(R.id.barcode_camera);
 
         lastAdded= (TextView) v.findViewById(R.id.last_thing);
         updateUI();
 
-        //listView = (ListView) v.findViewById(R.id.thing_list_view);
         newWhat= (TextView) v.findViewById(R.id.what_text);
         newWhere= (TextView) v.findViewById(R.id.where_text);
+        searchWhat = (TextView) v.findViewById(R.id.search_text);
 
         newWhere.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -145,6 +147,53 @@ public class TingleFragment extends Fragment {
         });
 
 
+        searchWhat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId) {
+                    case EditorInfo.IME_ACTION_DONE:
+                        String whatSearch = searchWhat.getText().toString();
+                        List<Thing> result = thingsDB.searchThing(whatSearch);
+
+                        TingleFragmentList fragmentList = (TingleFragmentList) getFragmentManager().findFragmentById(R.id.fragment_container_list);
+                        if (fragmentList != null) {
+                            fragmentList.searchListView(result);
+                        }
+
+                        InputMethodManager inputManager =
+                                (InputMethodManager) getActivity().
+                                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.hideSoftInputFromWindow(
+                                getActivity().getCurrentFocus().getWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+
+                        searchWhat.setText("");
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        //TODO!!! find out how to list all things again!
+        searchThings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String whatSearch = searchWhat.getText().toString();
+                searchWhat.setText("");
+                List<Thing> result = thingsDB.searchThing(whatSearch);
+
+                TingleFragmentList fragmentList = (TingleFragmentList) getFragmentManager().findFragmentById(R.id.fragment_container_list);
+                if (fragmentList != null) {
+                    fragmentList.searchListView(result);
+                }
+
+            }
+        });
+
+
+
+
         return v;
     }
 
@@ -154,6 +203,7 @@ public class TingleFragment extends Fragment {
         if (requestCode == 0) {
             if (resultCode == getActivity().RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
+                System.out.println("contents are: " + contents);
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
 // Handle successful scan, go on the internet, fetch data and present.
@@ -251,12 +301,14 @@ public class TingleFragment extends Fragment {
         @Override
         protected byte[] doInBackground(String... params) {
             byte[] result = null;
+            String item = params[0];
             try
             {
                 result = new NetworkFetcher()
-                        .getProductInfo("https://api.outpan.com/v2/products/"+params+"/?apikey="+API_KEY);//"https://www.outpan.com/view_product.php?barcode="+params);
+                        .getProductInfo("https://api.outpan.com/v2/products/"+item+"/?apikey="+API_KEY);//"https://www.outpan.com/view_product.php?barcode="+params);
                         //https://api.outpan.com/v2/products/<barcode>/?apikey=API_KEY
-            }           //it is JSON though..
+            }
+
             catch (IOException ioe)
             {
                 Log.e(TAG, "Failed to fetch URL: ", ioe);
@@ -277,6 +329,11 @@ public class TingleFragment extends Fragment {
             catch (JSONException je)
             {
                 Log.e(TAG, "Failed to parse JSON", je);
+            }
+            catch (Exception e)
+            {
+                Log.e(TAG, "Some error happened", e);
+
             }
 
         }

@@ -34,7 +34,6 @@ public class ListActivity extends AppCompatActivity
 {
     private Menu mMenu;
     private static ThingsDB thingsDB;
-    //make this searchable activity?  http://developer.android.com/guide/topics/search/search-dialog.html
 
     @Override
     protected void  onCreate(Bundle savedInstanceState)

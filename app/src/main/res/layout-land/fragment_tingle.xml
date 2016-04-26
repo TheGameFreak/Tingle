@@ -98,4 +98,38 @@
         android:visibility="gone"
         />
 
+    <Button
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/red"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textAllCaps="false"
+        android:text="@string/search_hint"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_height="match_parent"
+            android:text="@string/what_thing"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:id="@+id/search_text"
+            android:singleLine="true"
+            />
+    </LinearLayout>
 </LinearLayout>
